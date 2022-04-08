@@ -25,4 +25,16 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.example.sirius_app.TaskFragment"
+        android:label="TaskFragment" >
+        <action
+            android:id="@+id/action_taskFragment_to_selectTaskFragment"
+            app:destination="@id/selectTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectTaskFragment"
+        android:name="com.example.sirius_app.SelectTaskFragment"
+        android:label="SelectTaskFragment" />
 </navigation>

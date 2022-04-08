@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/HP/AndroidStudioProjects/sirius_app/app/src/main/res/layout/activity_main.xml" value="0.11851851851851852" />
+        <entry key="..\:/Users/Home/StudioProjects/sirius_appp/app/src/main/res/drawable/error_background.xml" value="0.1" />
+        <entry key="..\:/Users/Home/StudioProjects/sirius_appp/app/src/main/res/drawable/right_background.xml" value="0.2045" />
+        <entry key="..\:/Users/Home/StudioProjects/sirius_appp/app/src/main/res/layout/fragment_select_task.xml" value="0.1" />
+        <entry key="..\:/Users/Home/StudioProjects/sirius_appp/app/src/main/res/layout/fragment_task.xml" value="0.25" />
       </map>
     </option>
   </component>
