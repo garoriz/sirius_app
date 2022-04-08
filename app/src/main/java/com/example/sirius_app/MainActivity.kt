@@ -12,10 +12,11 @@ import android.view.MenuItem
 import com.example.sirius_app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    public val PACKAGE_NAME = applicationContext.packageName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        Data.PACKAGE_NAME = applicationContext.packageName
     }
 }
