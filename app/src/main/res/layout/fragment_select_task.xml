@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/btn_nums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/nums"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_baseline_account_circle_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_nums_phones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="Номера телефонов"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_baseline_home_24"
+        app:layout_constraintTop_toBottomOf="@id/btn_nums"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/time"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_baseline_settings_24"
+        app:layout_constraintTop_toBottomOf="@id/btn_nums"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_dates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/dates"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_launcher_background"
+        app:layout_constraintTop_toBottomOf="@id/btn_nums_phones"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_geography"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/geography"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_baseline_home_24"
+        app:layout_constraintTop_toBottomOf="@id/btn_dates"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_addresses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/addresses"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_baseline_settings_24"
+        app:layout_constraintTop_toBottomOf="@id/btn_dates"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_combo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/combo"
+        android:layout_margin="16dp"
+        android:drawableTop="@drawable/ic_baseline_settings_24"
+        app:layout_constraintTop_toBottomOf="@id/btn_geography"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
