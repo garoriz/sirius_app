@@ -36,6 +36,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private var isCheck: Boolean = false
     private lateinit var soundDb: SQLiteDatabase
     private val listAnswers = mutableListOf<Int>()
+    private var score: Int = 0
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -139,22 +140,32 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             edAnswer3.isEnabled = false
             if (edAnswer1.text.toString() == listAnswers[0].toString()) {
                 edAnswer1.setBackgroundResource(R.drawable.right_background)
+                score++
             } else {
                 edAnswer1.setText(listAnswers[0].toString())
                 edAnswer1.setBackgroundResource(R.drawable.error_background)
             }
             if (edAnswer2.text.toString() == listAnswers[1].toString()) {
                 edAnswer2.setBackgroundResource(R.drawable.right_background)
+                score++
             } else {
                 edAnswer2.setText(listAnswers[1].toString())
                 edAnswer2.setBackgroundResource(R.drawable.error_background)
             }
             if (edAnswer3.text.toString() == listAnswers[2].toString()) {
                 edAnswer3.setBackgroundResource(R.drawable.right_background)
+                score++
             } else {
                 edAnswer3.setText(listAnswers[2].toString())
                 edAnswer3.setBackgroundResource(R.drawable.error_background)
             }
+            when (score) {
+                3 -> tvInfo.setText("Молодец! 3 из 3")
+                2 -> tvInfo.setText("Всего одна ошибка! 2 из 3")
+                1 -> tvInfo.setText("1 из 3")
+                0 -> tvInfo.setText("0 из 3")
+            }
+            score = 0
         }
     }
 

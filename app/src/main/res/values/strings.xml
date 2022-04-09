@@ -26,4 +26,10 @@
     <string name="_2">2…</string>
     <string name="_1">1…</string>
     <string name="listen_sound">Прослушайте запись…</string>
+    <string name="accents">Акценты</string>
+    <string name="uk">Британский</string>
+    <string name="fr">Французский</string>
+    <string name="difficult">Сложность</string>
+    <string name="easy">Легкий</string>
+    <string name="advanced">Продвинутый</string>
 </resources>
