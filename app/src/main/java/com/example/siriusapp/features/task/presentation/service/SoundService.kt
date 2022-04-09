@@ -29,7 +29,7 @@ class SoundService : Service() {
 
     private fun playSound(song: Int) {
         mediaPlayer = MediaPlayer.create(applicationContext, song)
-        mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(1.5F);
+        mediaPlayer.playbackParams = mediaPlayer.playbackParams.setSpeed(1.4F);
         mediaPlayer.run {
             start()
             setOnCompletionListener {

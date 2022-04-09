@@ -111,6 +111,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     }
 
     private fun check() {
+        isCheck = true
         with(binding) {
             btnCheck.visibility = View.INVISIBLE
             btnContinue.visibility = View.VISIBLE
