@@ -31,6 +31,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private var arrayEt = ArrayList<EditText>(3)
     private var current: Int = 0
     private var isCheck: Boolean = false
+    private var score: Int = 0
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -89,9 +90,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     }
 
     private fun chooseAudios() {
-        number1 = (10..20).random()
-        number2 = (10..20).random()
-        number3 = (10..20).random()
+//        number1 = (10..20).random()
+//        number2 = (10..20).random()
+//        number3 = (10..20).random()
+        number1 = 20
+        number2 = 17
+        number3 = 14
         while (number2 == number1) {
             number2 = (10..20).random()
         }
@@ -103,9 +107,9 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private fun startMedia() {
         lifecycleScope.launch {
             binder?.play(resources.getIdentifier("n" + 20.toString(), "raw", activity?.packageName))
-            delay(400)
+            delay(500)
             binder?.play(R.raw.n17eng)
-            delay(400)
+            delay(500)
             binder?.play(R.raw.n14)
         }
     }
@@ -120,27 +124,37 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             edAnswer3.isEnabled = false
             if (edAnswer1.text.toString() == number1.toString()) {
                 edAnswer1.setBackgroundResource(R.drawable.right_background)
+                score++
             } else {
                 edAnswer1.setText(number1.toString())
                 edAnswer1.setBackgroundResource(R.drawable.error_background)
             }
             if (edAnswer2.text.toString() == number2.toString()) {
                 edAnswer2.setBackgroundResource(R.drawable.right_background)
+                score++
             } else {
                 edAnswer2.setText(number2.toString())
                 edAnswer2.setBackgroundResource(R.drawable.error_background)
             }
             if (edAnswer3.text.toString() == number3.toString()) {
                 edAnswer3.setBackgroundResource(R.drawable.right_background)
+                score++
             } else {
                 edAnswer3.setText(number3.toString())
                 edAnswer3.setBackgroundResource(R.drawable.error_background)
             }
+            when (score) {
+                3 -> tvInfo.setText("Молодец! 3 из 3")
+                2 -> tvInfo.setText("Всего одна ошибка! 2 из 3")
+                1 -> tvInfo.setText("1 из 3")
+                0 -> tvInfo.setText("0 из 3")
+            }
+            score = 0
         }
     }
 
     private fun endTask() {
-        view?.findNavController()?.navigate(R.id.action_taskFragment_to_selectTaskFragment)
+        view?.findNavController()?.navigateUp()
     }
 
     private fun changeEditTexts() {
