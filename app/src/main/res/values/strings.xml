@@ -18,4 +18,12 @@
     <string name="four_digit">Четырёхзначные</string>
     <string name="five_six_digit">Пяти- и шестизначные</string>
     <string name="training_by_themes">Тренировка по темам</string>
+    <string name="enter_answer">Вводите ответ в это окно</string>
+    <string name="start">Начать</string>
+    <string name="check_answer">Проверить ответ</string>
+    <string name="end">Продолжить</string>
+    <string name="_3">3…</string>
+    <string name="_2">2…</string>
+    <string name="_1">1…</string>
+    <string name="listen_sound">Прослушайте запись…</string>
 </resources>

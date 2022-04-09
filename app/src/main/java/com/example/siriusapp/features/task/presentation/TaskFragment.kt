@@ -4,17 +4,19 @@ import android.content.ComponentName
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.Intent
 import android.content.ServiceConnection
-import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.provider.Contacts
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.example.siriusapp.R
 import com.example.siriusapp.databinding.FragmentTaskBinding
-import androidx.navigation.findNavController
 import com.example.siriusapp.features.task.presentation.service.SoundService
+import kotlinx.coroutines.*
+
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
     private lateinit var binding: FragmentTaskBinding
@@ -62,17 +64,19 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private fun start() {
         with(binding) {
-            btnStart.visibility = View.INVISIBLE
-            tvInfo.visibility = View.VISIBLE
-            Thread.sleep(1000)
-            tvInfo.text = "2..."
-            Thread.sleep(1000)
-            tvInfo.text = "1..."
-            Thread.sleep(1000)
-            tvInfo.text = "Прослушайте запись..."
-            chooseAudios()
-            binder?.play(R.raw.n20)
-            btnCheck.visibility = View.VISIBLE
+            lifecycleScope.launch {
+                btnStart.visibility = View.INVISIBLE
+                tvInfo.visibility = View.VISIBLE
+                delay(1000L)
+                tvInfo.text = getString(R.string._2)
+                delay(1000L)
+                tvInfo.text = getString(R.string._1)
+                delay(1000L)
+                tvInfo.text = getString(R.string.listen_sound)
+                chooseAudios()
+                binder?.play(R.raw.n20)
+                btnCheck.visibility = View.VISIBLE
+            }
         }
     }
 
