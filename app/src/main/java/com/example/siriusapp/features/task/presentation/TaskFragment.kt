@@ -76,8 +76,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 edAnswer1.visibility = View.INVISIBLE
                 edAnswer2.visibility = View.INVISIBLE
                 edAnswer3.visibility = View.INVISIBLE
-            }
-            with(binding) {
                 arrayBtns.add(btnAnswer1)
                 arrayBtns.add(btnAnswer2)
                 arrayBtns.add(btnAnswer3)
@@ -133,12 +131,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                             t2 += 9
                         }
                         btn.text = "$t1, $t2, $t3"
-                        t3 = (0..3).random()
-                        rightAnswer = t3
-                        arrayBtns[t3].text = "$number1, $number2, $number3"
                         btn.visibility = View.VISIBLE
                     }
                 }
+                var t3 = (0..3).random()
+                rightAnswer = t3
+                arrayBtns[t3].text = "$number1, $number2, $number3"
                 startMedia()
             }
         }
@@ -220,6 +218,17 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             }
             score = 0
         }
+    }
+
+    private fun checkSimple(selectedBtn: Button, rightBtn: Button) {
+        binding.btnCheck.visibility = View.INVISIBLE
+        if (selectedBtn.text.toString() == "$number1, $number2, $number3") {
+            selectedBtn.setBackgroundResource(R.drawable.right_background)
+        } else {
+            selectedBtn.setBackgroundResource(R.drawable.error_background)
+            rightBtn.setBackgroundResource(R.drawable.right_background)
+        }
+        binding.btnContinue.visibility = View.VISIBLE
     }
 
     private fun endTask() {
