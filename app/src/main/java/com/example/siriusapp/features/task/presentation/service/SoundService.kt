@@ -23,6 +23,8 @@ class SoundService : Service() {
         fun play(sound: Int) {
             playSound(sound)
         }
+
+        fun isPlaying() = this@SoundService.isPlaying()
     }
 
     override fun onBind(p0: Intent?): IBinder = LocaleBinder()
@@ -37,6 +39,8 @@ class SoundService : Service() {
             }
         }
     }
+
+    private fun isPlaying() = mediaPlayer.isPlaying
 
     override fun onDestroy() {
         super.onDestroy()

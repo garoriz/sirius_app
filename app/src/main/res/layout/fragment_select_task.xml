@@ -12,66 +12,69 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:text="@string/nums"
-        android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_baseline_account_circle_24"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="16dp"
+        android:drawableTop="@drawable/nums_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/btn_nums_phones"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:text="Номера телефонов"
         android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_baseline_home_24"
-        app:layout_constraintTop_toBottomOf="@id/btn_nums"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/white"
+        android:drawableTop="@drawable/iconfinder_call_chat_communication_phone_phones_ringing_smartphone_speech_talk_telephone_392498"
+        android:text="@string/num_phones"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_nums" />
 
     <Button
         android:id="@+id/btn_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="90dp"
         android:backgroundTint="@color/white"
         android:text="@string/time"
         android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_baseline_settings_24"
+        android:drawableTop="@drawable/iconfinder_clock_hour_minute_second_time_timer_watch_4781814"
         app:layout_constraintTop_toBottomOf="@id/btn_nums"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/btn_dates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="90dp"
         android:backgroundTint="@color/white"
         android:text="@string/dates"
         android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_launcher_background"
+        android:drawableTop="@drawable/iconfinder_calendar_clock_date_event_schedule_time_290104"
         app:layout_constraintTop_toBottomOf="@id/btn_nums_phones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/btn_geography"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="90dp"
         android:backgroundTint="@color/white"
         android:text="@string/geography"
         android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_baseline_home_24"
+        android:drawableTop="@drawable/iconfinder_summer_mountains_travel_vacation_sun_holiday_7740294"
         app:layout_constraintTop_toBottomOf="@id/btn_dates"
         app:layout_constraintStart_toStartOf="parent"
         />
 
     <Button
         android:id="@+id/btn_addresses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="90dp"
         android:backgroundTint="@color/white"
         android:text="@string/addresses"
         android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_baseline_settings_24"
+        android:drawableTop="@drawable/iconfinder_home_house_3844470"
         app:layout_constraintTop_toBottomOf="@id/btn_dates"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -82,7 +85,7 @@
         android:backgroundTint="@color/white"
         android:text="@string/combo"
         android:layout_margin="16dp"
-        android:drawableTop="@drawable/ic_baseline_settings_24"
+        android:drawableTop="@drawable/iconfinder_checkmark_done_exam_list_pencil_todo_1622833"
         app:layout_constraintTop_toBottomOf="@id/btn_geography"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

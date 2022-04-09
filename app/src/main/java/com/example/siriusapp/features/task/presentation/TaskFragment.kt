@@ -21,6 +21,7 @@ import com.example.siriusapp.R
 import com.example.siriusapp.databinding.FragmentTaskBinding
 import com.example.siriusapp.features.task.data.db.ActsDbHelper
 import com.example.siriusapp.features.task.presentation.service.SoundService
+import com.example.siriusapp.model.Settings
 import kotlinx.coroutines.*
 import java.util.ArrayList
 
@@ -37,6 +38,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private lateinit var soundDb: SQLiteDatabase
     private val listAnswers = mutableListOf<Int>()
     private var score: Int = 0
+    private lateinit var cursor: Cursor
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -93,7 +95,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 tvInfo.text = getString(R.string.listen_sound)
                 chooseAudios()
                 startMedia()
-                btnCheck.visibility = View.VISIBLE
             }
         }
     }
@@ -112,11 +113,16 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private fun startMedia() {
         lifecycleScope.launch {
-            val cursor = soundDb.rawQuery("SELECT * FROM sounds_en", null)
+            if (Settings.accent == "uk") {
+                cursor = soundDb.rawQuery("SELECT * FROM sounds_en", null)
+            } else if (Settings.accent == "fr") {
+                cursor = soundDb.rawQuery("SELECT * FROM sounds_fr", null)
+            }
 
             startOneSound(cursor, number1)
             startOneSound(cursor, number2)
             startOneSound(cursor, number3)
+            binding.btnCheck.visibility = View.VISIBLE
         }
     }
 
