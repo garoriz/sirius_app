@@ -13,4 +13,9 @@
     <string name="geography">География</string>
     <string name="addresses">Адреса</string>
     <string name="combo">Комбо</string>
+    <string name="two_digits">Двухзначные</string>
+    <string name="three_digit">Трёхзначные</string>
+    <string name="four_digit">Четырёхзначные</string>
+    <string name="five_six_digit">Пяти- и шестизначные</string>
+    <string name="training_by_themes">Тренировка по темам</string>
 </resources>

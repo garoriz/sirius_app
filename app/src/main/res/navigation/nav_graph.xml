@@ -27,5 +27,25 @@
     <fragment
         android:id="@+id/selectTaskFragment"
         android:name="com.example.siriusapp.features.selectTask.presentation.SelectTaskFragment"
-        android:label="SelectTaskFragment" />
+        android:label="SelectTaskFragment" >
+        <action
+            android:id="@+id/action_selectTaskFragment_to_selectNumsFragment2"
+            app:destination="@id/selectNumsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectNumsFragment2"
+        android:name="com.example.siriusapp.features.selectNums.presentation.SelectNumsFragment"
+        android:label="SelectNumsFragment" >
+        <action
+            android:id="@+id/action_selectNumsFragment2_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.example.siriusapp.features.task.presentation.TaskFragment"
+        android:label="TaskFragment" >
+        <action
+            android:id="@+id/action_taskFragment_to_selectTaskFragment"
+            app:destination="@id/selectTaskFragment" />
+    </fragment>
 </navigation>
