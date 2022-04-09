@@ -4,6 +4,8 @@ import android.content.ComponentName
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.Intent
 import android.content.ServiceConnection
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.os.IBinder
 import android.text.Editable
@@ -17,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.siriusapp.R
 import com.example.siriusapp.databinding.FragmentTaskBinding
+import com.example.siriusapp.features.task.data.db.ActsDbHelper
 import com.example.siriusapp.features.task.presentation.service.SoundService
 import kotlinx.coroutines.*
 import java.util.ArrayList
@@ -31,6 +34,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private var arrayEt = ArrayList<EditText>(3)
     private var current: Int = 0
     private var isCheck: Boolean = false
+    private lateinit var soundDb: SQLiteDatabase
+    private val listAnswers = mutableListOf<Int>()
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -49,6 +54,10 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTaskBinding.bind(view)
+
+        lifecycleScope.launch {
+            soundDb = ActsDbHelper(requireContext()).readableDatabase
+        }
 
         activity?.bindService(
             Intent(this.context, SoundService::class.java),
@@ -89,25 +98,35 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     }
 
     private fun chooseAudios() {
-        number1 = (10..20).random()
-        number2 = (10..20).random()
-        number3 = (10..20).random()
+        number1 = (0..9).random()
+        number2 = (0..9).random()
+        number3 = (0..9).random()
         while (number2 == number1) {
-            number2 = (10..20).random()
+            number2 = (0..9).random()
         }
         while (number2 == number3 || number1 == number3) {
-            number3 = (10..20).random()
+            number3 = (0..9).random()
         }
     }
 
     private fun startMedia() {
         lifecycleScope.launch {
-            binder?.play(resources.getIdentifier("n" + 20.toString(), "raw", activity?.packageName))
-            delay(400)
-            binder?.play(R.raw.n17eng)
-            delay(400)
-            binder?.play(R.raw.n14)
+            val cursor = soundDb.rawQuery("SELECT * FROM sounds_en", null)
+
+            startOneSound(cursor, number1)
+            startOneSound(cursor, number2)
+            startOneSound(cursor, number3)
         }
+    }
+
+    private suspend fun startOneSound(cursor: Cursor, number1: Int) {
+        cursor.moveToFirst()
+        for (i in 1..number1) {
+            cursor.moveToNext()
+        }
+        listAnswers.add(cursor.getInt(2))
+        binder?.play(resources.getIdentifier(cursor.getString(1), "raw", activity?.packageName))
+        delay(1500)
     }
 
     private fun check() {
@@ -118,29 +137,29 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             edAnswer1.isEnabled = false
             edAnswer2.isEnabled = false
             edAnswer3.isEnabled = false
-            if (edAnswer1.text.toString() == number1.toString()) {
+            if (edAnswer1.text.toString() == listAnswers[0].toString()) {
                 edAnswer1.setBackgroundResource(R.drawable.right_background)
             } else {
-                edAnswer1.setText(number1.toString())
+                edAnswer1.setText(listAnswers[0].toString())
                 edAnswer1.setBackgroundResource(R.drawable.error_background)
             }
-            if (edAnswer2.text.toString() == number2.toString()) {
+            if (edAnswer2.text.toString() == listAnswers[1].toString()) {
                 edAnswer2.setBackgroundResource(R.drawable.right_background)
             } else {
-                edAnswer2.setText(number2.toString())
+                edAnswer2.setText(listAnswers[1].toString())
                 edAnswer2.setBackgroundResource(R.drawable.error_background)
             }
-            if (edAnswer3.text.toString() == number3.toString()) {
+            if (edAnswer3.text.toString() == listAnswers[2].toString()) {
                 edAnswer3.setBackgroundResource(R.drawable.right_background)
             } else {
-                edAnswer3.setText(number3.toString())
+                edAnswer3.setText(listAnswers[2].toString())
                 edAnswer3.setBackgroundResource(R.drawable.error_background)
             }
         }
     }
 
     private fun endTask() {
-        view?.findNavController()?.navigate(R.id.action_taskFragment_to_selectTaskFragment)
+        view?.findNavController()?.navigateUp()
     }
 
     private fun changeEditTexts() {
