@@ -71,7 +71,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             BIND_AUTO_CREATE
         )
 
-        if (!Settings.isHardDiff) {
+            if (!Settings.isHardDiff) {
             with(binding) {
                 edAnswer1.visibility = View.INVISIBLE
                 edAnswer2.visibility = View.INVISIBLE
@@ -121,22 +121,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 delay(1000L)
                 tvInfo.text = getString(R.string.listen_sound)
                 chooseAudios()
-                if (!Settings.isHardDiff) {
-                    for (btn in arrayBtns) {
-                        var t1 = (10..90).random()
-                        var t2 = (10..90).random()
-                        var t3 = (10..90).random()
-                        if (t1 == number1 && t2 == number2 && t3 == number3) {
-                            t1 -= 4
-                            t2 += 9
-                        }
-                        btn.text = "$t1, $t2, $t3"
-                        btn.visibility = View.VISIBLE
-                    }
-                }
-                var t3 = (0..3).random()
-                rightAnswer = t3
-                arrayBtns[t3].text = "$number1, $number2, $number3"
                 startMedia()
             }
         }
@@ -167,6 +151,18 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             startOneSound(cursor, number3)
             if (Settings.isHardDiff) {
                 binding.btnCheck.visibility = View.VISIBLE
+            }
+            if (!Settings.isHardDiff) {
+                for (btn in arrayBtns) {
+                    val t1 = (10..90).random()
+                    val t2 = (10..90).random()
+                    val t3 = (10..90).random()
+                    btn.text = "$t1, $t2, $t3"
+                    btn.visibility = View.VISIBLE
+                }
+                val t3 = (0..3).random()
+                rightAnswer = t3
+                arrayBtns[t3].text = listAnswers[0].toString() + ", " + listAnswers[1].toString() + ", " + listAnswers[2].toString()
             }
         }
     }
@@ -222,10 +218,13 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private fun checkSimple(selectedBtn: Button, rightBtn: Button) {
         binding.btnCheck.visibility = View.INVISIBLE
-        if (selectedBtn.text.toString() == "$number1, $number2, $number3") {
+        if (selectedBtn.text.toString() == "listAnswers[0].toString() + \", \" + listAnswers[1].toString() + \", \" + listAnswers[2].toString()") {
+            for (btn in arrayBtns)
+                btn.setBackgroundResource(R.drawable.error_background)
             selectedBtn.setBackgroundResource(R.drawable.right_background)
         } else {
-            selectedBtn.setBackgroundResource(R.drawable.error_background)
+            for (btn in arrayBtns)
+                btn.setBackgroundResource(R.drawable.error_background)
             rightBtn.setBackgroundResource(R.drawable.right_background)
         }
         binding.btnContinue.visibility = View.VISIBLE
