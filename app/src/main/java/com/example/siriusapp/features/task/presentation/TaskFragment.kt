@@ -37,6 +37,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private var current: Int = 0
     private var isCheck: Boolean = false
     private lateinit var soundDb: SQLiteDatabase
+    private val listSounds = mutableListOf<String>()
     private val listAnswers = mutableListOf<Int>()
     private var score: Int = 0
     private lateinit var cursor: Cursor
@@ -61,8 +62,21 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTaskBinding.bind(view)
 
+        chooseAudios()
+
         lifecycleScope.launch {
             soundDb = ActsDbHelper(requireContext()).readableDatabase
+
+            if (Settings.accent == "uk") {
+                cursor = soundDb.rawQuery("SELECT * FROM sounds_en", null)
+            } else if (Settings.accent == "fr") {
+                cursor = soundDb.rawQuery("SELECT * FROM sounds_fr", null)
+            }
+
+
+            randomSounds(number1)
+            randomSounds(number2)
+            randomSounds(number3)
         }
 
         activity?.bindService(
@@ -71,7 +85,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             BIND_AUTO_CREATE
         )
 
-            if (!Settings.isHardDiff) {
+        if (!Settings.isHardDiff) {
             with(binding) {
                 edAnswer1.visibility = View.INVISIBLE
                 edAnswer2.visibility = View.INVISIBLE
@@ -80,6 +94,16 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 arrayBtns.add(btnAnswer2)
                 arrayBtns.add(btnAnswer3)
                 arrayBtns.add(btnAnswer4)
+                for (btn in arrayBtns) {
+                    val t1 = (10..90).random()
+                    val t2 = (10..90).random()
+                    val t3 = (10..90).random()
+                    btn.text = "$t1, $t2, $t3"
+                }
+                val t3 = (0..3).random()
+                rightAnswer = t3
+                arrayBtns[t3].text =
+                    listAnswers[0].toString() + ", " + listAnswers[1].toString() + ", " + listAnswers[2].toString()
             }
         }
 
@@ -120,7 +144,9 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 tvInfo.text = getString(R.string._1)
                 delay(1000L)
                 tvInfo.text = getString(R.string.listen_sound)
-                chooseAudios()
+                for (btn in arrayBtns) {
+                    btn.visibility = View.VISIBLE
+                }
                 startMedia()
             }
         }
@@ -140,40 +166,27 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private fun startMedia() {
         lifecycleScope.launch {
-            if (Settings.accent == "uk") {
-                cursor = soundDb.rawQuery("SELECT * FROM sounds_en", null)
-            } else if (Settings.accent == "fr") {
-                cursor = soundDb.rawQuery("SELECT * FROM sounds_fr", null)
-            }
 
-            startOneSound(cursor, number1)
-            startOneSound(cursor, number2)
-            startOneSound(cursor, number3)
+            startOneSound(listSounds[0])
+            startOneSound(listSounds[1])
+            startOneSound(listSounds[2])
             if (Settings.isHardDiff) {
                 binding.btnCheck.visibility = View.VISIBLE
-            }
-            if (!Settings.isHardDiff) {
-                for (btn in arrayBtns) {
-                    val t1 = (10..90).random()
-                    val t2 = (10..90).random()
-                    val t3 = (10..90).random()
-                    btn.text = "$t1, $t2, $t3"
-                    btn.visibility = View.VISIBLE
-                }
-                val t3 = (0..3).random()
-                rightAnswer = t3
-                arrayBtns[t3].text = listAnswers[0].toString() + ", " + listAnswers[1].toString() + ", " + listAnswers[2].toString()
             }
         }
     }
 
-    private suspend fun startOneSound(cursor: Cursor, number1: Int) {
+    private fun randomSounds(number: Int) {
         cursor.moveToFirst()
-        for (i in 1..number1) {
+        for (i in 1..number) {
             cursor.moveToNext()
         }
+        listSounds.add(cursor.getString(1))
         listAnswers.add(cursor.getInt(2))
-        binder?.play(resources.getIdentifier(cursor.getString(1), "raw", activity?.packageName))
+    }
+
+    private suspend fun startOneSound(soundName: String) {
+        binder?.play(resources.getIdentifier(soundName, "raw", activity?.packageName))
         delay(1500)
     }
 
@@ -189,21 +202,21 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 edAnswer1.setBackgroundResource(R.drawable.right_background)
                 score++
             } else {
-                edAnswer1.setText(listAnswers[0].toString())
+                edAnswer1.setText(getString(R.string.right_answer) + listAnswers[0].toString())
                 edAnswer1.setBackgroundResource(R.drawable.error_background)
             }
             if (edAnswer2.text.toString() == listAnswers[1].toString()) {
                 edAnswer2.setBackgroundResource(R.drawable.right_background)
                 score++
             } else {
-                edAnswer2.setText(listAnswers[1].toString())
+                edAnswer2.setText(getString(R.string.right_answer) + listAnswers[1].toString())
                 edAnswer2.setBackgroundResource(R.drawable.error_background)
             }
             if (edAnswer3.text.toString() == listAnswers[2].toString()) {
                 edAnswer3.setBackgroundResource(R.drawable.right_background)
                 score++
             } else {
-                edAnswer3.setText(listAnswers[2].toString())
+                edAnswer3.setText(getString(R.string.right_answer) + listAnswers[2].toString())
                 edAnswer3.setBackgroundResource(R.drawable.error_background)
             }
             when (score) {
