@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -39,6 +40,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private val listAnswers = mutableListOf<Int>()
     private var score: Int = 0
     private lateinit var cursor: Cursor
+    private var arrayBtns = ArrayList<Button>(4)
+    private var rightAnswer = 0
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -68,6 +71,20 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             BIND_AUTO_CREATE
         )
 
+        if (!Settings.isHardDiff) {
+            with(binding) {
+                edAnswer1.visibility = View.INVISIBLE
+                edAnswer2.visibility = View.INVISIBLE
+                edAnswer3.visibility = View.INVISIBLE
+            }
+            with(binding) {
+                arrayBtns.add(btnAnswer1)
+                arrayBtns.add(btnAnswer2)
+                arrayBtns.add(btnAnswer3)
+                arrayBtns.add(btnAnswer4)
+            }
+        }
+
         with(binding) {
             btnStart.setOnClickListener {
                 start()
@@ -79,6 +96,18 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 endTask()
             }
             changeEditTexts()
+            btnAnswer1.setOnClickListener {
+                checkSimple(arrayBtns[0], arrayBtns[rightAnswer])
+            }
+            btnAnswer2.setOnClickListener {
+                checkSimple(arrayBtns[1], arrayBtns[rightAnswer])
+            }
+            btnAnswer3.setOnClickListener {
+                checkSimple(arrayBtns[2], arrayBtns[rightAnswer])
+            }
+            btnAnswer4.setOnClickListener {
+                checkSimple(arrayBtns[3], arrayBtns[rightAnswer])
+            }
         }
     }
 
@@ -94,6 +123,22 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 delay(1000L)
                 tvInfo.text = getString(R.string.listen_sound)
                 chooseAudios()
+                if (!Settings.isHardDiff) {
+                    for (btn in arrayBtns) {
+                        var t1 = (10..90).random()
+                        var t2 = (10..90).random()
+                        var t3 = (10..90).random()
+                        if (t1 == number1 && t2 == number2 && t3 == number3) {
+                            t1 -= 4
+                            t2 += 9
+                        }
+                        btn.text = "$t1, $t2, $t3"
+                        t3 = (0..3).random()
+                        rightAnswer = t3
+                        arrayBtns[t3].text = "$number1, $number2, $number3"
+                        btn.visibility = View.VISIBLE
+                    }
+                }
                 startMedia()
             }
         }
@@ -122,7 +167,9 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             startOneSound(cursor, number1)
             startOneSound(cursor, number2)
             startOneSound(cursor, number3)
-            binding.btnCheck.visibility = View.VISIBLE
+            if (Settings.isHardDiff) {
+                binding.btnCheck.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -166,10 +213,10 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 edAnswer3.setBackgroundResource(R.drawable.error_background)
             }
             when (score) {
-                3 -> tvInfo.setText("Молодец! 3 из 3")
-                2 -> tvInfo.setText("Всего одна ошибка! 2 из 3")
-                1 -> tvInfo.setText("1 из 3")
-                0 -> tvInfo.setText("0 из 3")
+                3 -> tvInfo.text = "Молодец! 3 из 3"
+                2 -> tvInfo.text = "Всего одна ошибка! 2 из 3"
+                1 -> tvInfo.text = "1 из 3"
+                0 -> tvInfo.text = "0 из 3"
             }
             score = 0
         }
